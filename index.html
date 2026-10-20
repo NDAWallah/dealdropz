@@ -3,12 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DealDropz - Compare & Loot Viral Deals</title>
+    <title>DealDropz - Compare & Loot Viral Deals | Powered by NDA WALLAH</title>
     <meta name="theme-color" content="#f05b43" />
-    <meta name="description" content="Discover reel-worthy fashion, viral gadgets and everyday finds. Compare Amazon, Flipkart and Meesho prices with DealDropz." />
+    <meta name="description" content="Discover reel-worthy fashion, viral gadgets and everyday finds. Compare Amazon, Flipkart and Meesho prices with DealDropz. Powered by NDA WALLAH." />
+    <style>
+      /* 1. Powered by Netlify के काले फ्लोटिंग बटन को हमेशा के लिए गायब करने का नियम */
+      a[href*="netlify.com"],
+      a[href*="utm_source=netlify"],
+      div[class*="netlify"],
+      iframe[src*="netlify"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
+
+      /* 2. Powered by NDA WALLAH पट्टी और आइकन बटन का डिज़ाइन */
+      .nda-wallah-bar {
+        width: 100%;
+        background: #0f172a;
+        color: #ffffff;
+        text-align: center;
+        padding: 14px 16px;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 14px;
+        border-top: 2px solid #f05b43;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .nda-wallah-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #f05b43;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        box-shadow: 0 2px 8px rgba(240, 91, 67, 0.4);
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+
+      .nda-wallah-link:hover {
+        background: #d9462f;
+        transform: translateY(-1px);
+      }
+    </style>
   </head>
   <body class="antialiased">
     <div id="root"></div>
+
+    <!-- वेबसाइट के नीचे दिखने वाला NDA WALLAH का आइकन और लिंक -->
+    <footer class="nda-wallah-bar">
+      <span>⚡ Powered by <strong>NDA WALLAH</strong></span>
+      <a href="https://ndawallah.github.io/my-website/" target="_blank" rel="noopener noreferrer" class="nda-wallah-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span>WEB OF NDA WALLAH</span>
+      </a>
+    </footer>
+
     <script type="module" src="/src/main.jsx"></script>
+
+    <script>
+      // अगर Netlify ऊपर से बटन चिपकाने की कोशिश करे तो उसे तुरंत हटाने का स्मार्ट कोड
+      function hideNetlifyBadge() {
+        document.querySelectorAll('a, div, aside, span').forEach((el) => {
+          const text = (el.innerText || '').trim();
+          const href = el.getAttribute && (el.getAttribute('href') || '');
+          if (text === 'Powered by Netlify' || href.includes('netlify.com')) {
+            el.style.setProperty('display', 'none', 'important');
+            el.style.setProperty('visibility', 'hidden', 'important');
+            el.style.setProperty('pointer-events', 'none', 'important');
+          }
+          if (el.shadowRoot) {
+            el.shadowRoot.querySelectorAll('a, div').forEach((s) => {
+              if ((s.innerText || '').includes('Netlify')) {
+                s.style.setProperty('display', 'none', 'important');
+              }
+            });
+          }
+        });
+      }
+
+      hideNetlifyBadge();
+      const observer = new MutationObserver(hideNetlifyBadge);
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    </script>
   </body>
 </html>
